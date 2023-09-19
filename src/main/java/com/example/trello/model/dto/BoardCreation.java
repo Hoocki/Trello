@@ -1,18 +1,14 @@
 package com.example.trello.model.dto;
-
 public class BoardCreation {
-    private Long id;
 
     private String name;
 
     private String description;
 
-
     public BoardCreation() {
     }
 
-    public BoardCreation(Long id, String name, String description) {
-        this.id = id;
+    public BoardCreation(final String name, final String description) {
         this.name = name;
         this.description = description;
     }
@@ -21,7 +17,7 @@ public class BoardCreation {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -29,7 +25,7 @@ public class BoardCreation {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
