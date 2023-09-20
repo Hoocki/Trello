@@ -16,6 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <postgresql.version>42.6.0</postgresql.version>
+        <hibernate.version>6.2.7.Final</hibernate.version>
     </properties>
     <dependencies>
         <dependency>
@@ -42,11 +43,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.2.7.Final</version>
         </dependency>
     </dependencies>
 

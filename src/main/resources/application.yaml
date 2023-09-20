@@ -1,5 +1,3 @@
-# postgres_configuration
-
 spring:
   jpa:
     show-sql: true
