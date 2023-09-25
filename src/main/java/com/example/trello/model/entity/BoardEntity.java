@@ -30,10 +30,9 @@ public class BoardEntity {
     public BoardEntity() {
     }
 
-    public BoardEntity(final String name, final String description, final LocalDateTime createdAt) {
+    public BoardEntity(final String name, final String description) {
         this.name = name;
         this.description = description;
-        this.createdAt = createdAt;
     }
 
     public Long getId() {

@@ -8,3 +8,6 @@ spring:
         default_schema: roma
     hibernate:
       ddl-auto: update
+server:
+  error:
+    include-message: always

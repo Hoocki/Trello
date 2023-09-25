@@ -13,12 +13,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "card")
+@Table(name = "cards")
 public class CardEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -44,7 +44,7 @@ public class CardEntity {
         this.boardEntity = boardEntity;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
