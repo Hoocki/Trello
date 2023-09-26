@@ -1,7 +1,9 @@
-package com.example.trello.model.entity;
+package com.example.trello.model.entity.card;
 
+import com.example.trello.model.entity.board.BoardEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,6 +11,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
@@ -30,18 +34,24 @@ public class CardEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
 
     public CardEntity() {
     }
 
-    public CardEntity(final String name, final String description, final LocalDateTime createdAt, final BoardEntity boardEntity) {
+    public CardEntity(final String name, final String description, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
-        this.boardEntity = boardEntity;
+        this.updatedAt = updatedAt;
+    }
+
+    public CardEntity(final String name, final String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public Long getId() {
@@ -74,6 +84,10 @@ public class CardEntity {
 
     public void setDescription(final String description) {
         this.description = description;
+    }
+
+    public void setBoardEntity(final BoardEntity boardEntity) {
+        this.boardEntity = boardEntity;
     }
 
 }

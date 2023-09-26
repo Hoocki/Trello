@@ -2,8 +2,8 @@ package com.example.trello.service.impl;
 
 import com.example.trello.service.exception.BoardException;
 import com.example.trello.mapper.BoardMapper;
-import com.example.trello.model.dto.BoardModification;
-import com.example.trello.model.entity.BoardEntity;
+import com.example.trello.model.dto.board.BoardModification;
+import com.example.trello.model.entity.board.BoardEntity;
 import com.example.trello.repository.BoardRepository;
 import com.example.trello.service.BoardService;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public BoardEntity addBoard(final BoardModification boardModification) {
-        final BoardEntity boardEntity = boardMapper.mapToBoardEntity(boardModification);
+        final BoardEntity boardEntity = boardMapper.map(boardModification);
         return boardRepository.save(boardEntity);
     }
 
