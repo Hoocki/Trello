@@ -1,4 +1,4 @@
-package com.example.trello.model.dto;
+package com.example.trello.model.dto.board;
 
 public class BoardModification {
 

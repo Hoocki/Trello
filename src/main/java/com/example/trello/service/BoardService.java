@@ -1,7 +1,7 @@
 package com.example.trello.service;
 
-import com.example.trello.model.dto.BoardModification;
-import com.example.trello.model.entity.BoardEntity;
+import com.example.trello.model.dto.board.BoardModification;
+import com.example.trello.model.entity.board.BoardEntity;
 import java.util.List;
 
 public interface BoardService {

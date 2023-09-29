@@ -1,7 +1,7 @@
 package com.example.trello.controller;
 
-import com.example.trello.model.dto.BoardModification;
-import com.example.trello.model.entity.BoardEntity;
+import com.example.trello.model.dto.board.BoardModification;
+import com.example.trello.model.entity.board.BoardEntity;
 import com.example.trello.service.BoardService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

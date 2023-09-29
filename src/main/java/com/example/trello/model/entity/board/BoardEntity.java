@@ -1,4 +1,4 @@
-package com.example.trello.model.entity;
+package com.example.trello.model.entity.board;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
