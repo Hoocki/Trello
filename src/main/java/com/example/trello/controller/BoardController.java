@@ -3,6 +3,7 @@ package com.example.trello.controller;
 import com.example.trello.model.dto.board.BoardModification;
 import com.example.trello.model.entity.board.BoardEntity;
 import com.example.trello.service.BoardService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,13 +35,13 @@ public class BoardController {
     }
 
     @PostMapping
-    public BoardEntity createBoard(@RequestBody final BoardModification boardModification) {
+    public BoardEntity createBoard(@Valid @RequestBody final BoardModification boardModification) {
         return boardService.addBoard(boardModification);
     }
 
     @PutMapping("{boardId}")
     public BoardEntity updateBoard(@PathVariable("boardId") final Long boardId,
-                                                         @RequestBody final BoardModification boardModification) {
+                                                        @Valid @RequestBody final BoardModification boardModification) {
         return boardService.updateBoard(boardId, boardModification);
     }
 
