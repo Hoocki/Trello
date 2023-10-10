@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
-import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -26,14 +25,22 @@ class BoardControllerTest {
     @Test
     void should_returnBoards() {
         // given
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
-        BoardEntity boardEntity2 = new BoardEntity("name2", "desc2");
-        List<BoardEntity> expectedBoards = Arrays.asList(boardEntity1, boardEntity2);
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
+
+        var boardEntity2 = BoardEntity.builder()
+                .name("name2")
+                .description("desc2")
+                .build();
+
+        var expectedBoards = Arrays.asList(boardEntity1, boardEntity2);
 
         given(boardService.getBoards()).willReturn(expectedBoards);
 
         // when
-        List<BoardEntity> result = boardController.getBoards();
+        var result = boardController.getBoards();
 
         // then
         assertThat(result)
@@ -44,13 +51,16 @@ class BoardControllerTest {
     @Test
     void should_returnBoard() {
         // given
-        long boardId = 1L;
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
+        var boardId = 1L;
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
 
         given(boardService.getBoardById(boardId)).willReturn(boardEntity1);
 
         // when
-        BoardEntity result = boardController.getBoardById(boardId);
+        var result = boardController.getBoardById(boardId);
 
         // then
         assertThat(result).isEqualTo(boardEntity1);
@@ -59,13 +69,20 @@ class BoardControllerTest {
     @Test
     void should_addBoard() {
         // given
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
-        BoardModification boardModification = new BoardModification("name1", "desc1");
+        var boardModification = BoardModification.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
+
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
 
         given(boardService.addBoard(boardModification)).willReturn(boardEntity1);
 
         // when
-        BoardEntity result = boardController.createBoard(boardModification);
+        var result = boardController.createBoard(boardModification);
 
         // then
         assertThat(result).isEqualTo(boardEntity1);
@@ -74,14 +91,21 @@ class BoardControllerTest {
     @Test
     void should_updateBoard() {
         // given
-        long boardId = 1L;
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
-        BoardModification boardModification = new BoardModification("name1", "desc1");
+        var boardId = 1L;
+        var boardModification = BoardModification.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
+
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
 
         given(boardService.updateBoard(boardId, boardModification)).willReturn(boardEntity1);
 
         // when
-        BoardEntity result = boardController.updateBoard(boardId, boardModification);
+        var result = boardController.updateBoard(boardId, boardModification);
 
         // then
         assertThat(result).isEqualTo(boardEntity1);
@@ -90,7 +114,7 @@ class BoardControllerTest {
     @Test
     void should_deleteBoard() {
         // given
-        long boardId = 1L;
+        var boardId = 1L;
 
         // when
         boardController.deleteBoard(boardId);

@@ -31,16 +31,24 @@ class BoardServiceImplTest {
     private BoardMapper boardMapper;
 
     @Test
-    void should_returnBoards_whenBoardsExist() {
+    void should_returnBoards_when_boardsExist() {
         // given
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
-        BoardEntity boardEntity2 = new BoardEntity("name2", "desc2");
-        List<BoardEntity> expectedBoards = Arrays.asList(boardEntity1, boardEntity2);
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
+
+        var boardEntity2 = BoardEntity.builder()
+                .name("name2")
+                .description("desc2")
+                .build();
+
+        var expectedBoards = Arrays.asList(boardEntity1, boardEntity2);
 
         given(boardRepository.findByOrderByNameAsc()).willReturn(expectedBoards);
 
         //when
-        List<BoardEntity> result = boardService.getBoards();
+        var result = boardService.getBoards();
 
         //then
         assertThat(result)
@@ -49,38 +57,41 @@ class BoardServiceImplTest {
     }
 
     @Test
-    void should_returnEmptyBoards_whenBoardsDoNotExist() {
+    void should_returnEmptyBoards_when_boardsDoNotExist() {
         // given
         List<BoardEntity> expectedBoards = List.of();
 
         given(boardRepository.findByOrderByNameAsc()).willReturn(expectedBoards);
 
         //when
-        List<BoardEntity> result = boardService.getBoards();
+        var result = boardService.getBoards();
 
         //then
         assertThat(result).isEmpty();
     }
 
     @Test
-    void should_returnBoardById_whenBoardExist() {
+    void should_returnBoardById_when_boardExists() {
         // given
-        long boardId = 1L;
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
+        var boardId = 1L;
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
 
         given(boardRepository.findById(boardId)).willReturn(Optional.of(boardEntity1));
 
         // when
-        BoardEntity result = boardService.getBoardById(boardId);
+        var result = boardService.getBoardById(boardId);
 
         // then
         assertThat(result).isEqualTo(boardEntity1);
     }
 
     @Test
-    void should_throwBoardException_whenBoardNotFound() {
+    void should_throwBoardException_when_boardNotFound() {
         // given
-        long boardId = 1L;
+        var boardId = 1L;
 
         given(boardRepository.findById(boardId)).willReturn(Optional.empty());
 
@@ -97,14 +108,21 @@ class BoardServiceImplTest {
     @Test
     void should_addBoard() {
         //given
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
-        BoardModification boardModification = new BoardModification("name1", "desc1");
+        var boardModification = BoardModification.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
+
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
 
         given(boardMapper.map(boardModification)).willReturn(boardEntity1);
         given(boardRepository.save(boardEntity1)).willReturn(boardEntity1);
 
         //when
-        BoardEntity result = boardService.addBoard(boardModification);
+        var result = boardService.addBoard(boardModification);
 
         //then
         assertThat(result).isEqualTo(boardEntity1);
@@ -113,7 +131,7 @@ class BoardServiceImplTest {
     @Test
     void should_deleteBoard() {
         // given
-        long boardId = 1L;
+        var boardId = 1L;
 
         // when
         boardService.deleteBoard(boardId);
@@ -125,17 +143,28 @@ class BoardServiceImplTest {
     @Test
     void should_updateBoard() {
         // given
-        long boardId = 1L;
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
-        BoardEntity boardEntity2 = new BoardEntity("name2", "desc2");
-        BoardModification boardModification = new BoardModification("name1", "desc1");
+        var boardId = 1L;
+        var boardEntity2 = BoardEntity.builder()
+                .name("name2")
+                .description("desc2")
+                .build();
+
+        var boardModification = BoardModification.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
+
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
 
         given(boardRepository.findById(boardId)).willReturn(Optional.of(boardEntity2));
         given(boardRepository.save(boardEntity1)).willReturn(boardEntity1);
         given(boardRepository.findById(boardId)).willReturn(Optional.of(boardEntity1));
 
         // when
-        BoardEntity result = boardService.updateBoard(boardId, boardModification);
+        var result = boardService.updateBoard(boardId, boardModification);
 
         // then
         assertThat(result).isEqualTo(boardEntity1);

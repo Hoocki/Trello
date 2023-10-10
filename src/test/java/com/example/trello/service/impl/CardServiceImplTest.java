@@ -37,17 +37,25 @@ class CardServiceImplTest {
     private CardMapper cardMapper;
 
     @Test
-    void should_returnCard_whenCardExists() {
+    void should_returnCard_when_cardExists() {
         // given
-        long cardId = 1L;
-        Card card1 = new Card(1L,"cardName1", "cardDesc1", null, null);
-        CardEntity cardEntity1 = new CardEntity("cardName1", "cardDesc1");
+        var cardId = 1L;
+        var cardEntity1 = CardEntity.builder()
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
+
+        var card1 = Card.builder()
+                .id(1L)
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
 
         given(cardRepository.findById(cardId)).willReturn(Optional.of(cardEntity1));
         given(cardMapper.map(cardEntity1)).willReturn(card1);
 
         // when
-        Card result = cardService.getCardById(cardId);
+        var result = cardService.getCardById(cardId);
 
         //then
         assertThat(result).isEqualTo(card1);
@@ -55,9 +63,9 @@ class CardServiceImplTest {
     }
 
     @Test
-    void should_throwCardException_whenCardDoNotExist() {
+    void should_throwCardException_when_cardDoesNotExist() {
         // given
-        long cardId = 1L;
+        var cardId = 1L;
 
         given(cardRepository.findById(cardId)).willReturn(Optional.empty());
 
@@ -71,20 +79,36 @@ class CardServiceImplTest {
     }
 
     @Test
-    void should_returnUpdatedCard_whenCardExists() {
+    void should_returnUpdatedCard_when_cardExists() {
         //given
-        long cardId = 1L;
-        Card card1 = new Card(1L,"newCardName", "newCardDesc", null, null);
-        CardEntity cardEntity1 = new CardEntity("oldCardName", "oldCardDesc");
-        CardEntity cardEntity2 = new CardEntity("newCardName", "newCardDesc");
-        CardModification cardModification = new CardModification("newCardName", "newCardDesc");
+        var cardId = 1L;
+        var cardEntity1 = CardEntity.builder()
+                .name("oldCardName")
+                .description("oldCardDesc")
+                .build();
+
+        var cardEntity2 = CardEntity.builder()
+                .name("newCardName")
+                .description("newCardDesc")
+                .build();
+
+        var cardModification = CardModification.builder()
+                .name("newCardName")
+                .description("newCardDesc")
+                .build();
+
+        var card1 = Card.builder()
+                .id(1L)
+                .name("newCardName")
+                .description("newCardDesc")
+                .build();
 
         given(cardRepository.findById(cardId)).willReturn(Optional.of(cardEntity1));
         given(cardRepository.save(cardEntity2)).willReturn(cardEntity2);
         given(cardMapper.map(cardEntity2)).willReturn(card1);
 
         //when
-        Card result = cardService.updateCard(cardId, cardModification);
+        var result = cardService.updateCard(cardId, cardModification);
 
         //then
         assertThat(result).isEqualTo(card1);
@@ -92,33 +116,50 @@ class CardServiceImplTest {
     }
 
     @Test
-    void should_returnCards_whenCardsExist() {
+    void should_returnCards_when_cardsExist() {
         //given
-        long boardId = 1L;
-        Card card1 = new Card(1L,"cardName1", "cardDesc1", null, null);
-        Card card2 = new Card(2L, "cardName2", "cardDesc2", null, null);
-        List<Card> expectedCards = Arrays.asList(card1, card2);
+        var boardId = 1L;
+        var card1 = Card.builder()
+                .id(1L)
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
 
-        CardEntity cardEntity1 = new CardEntity("cardName1", "cardDesc1");
-        CardEntity cardEntity2 = new CardEntity("cardName2", "cardDesc2");
-        List<CardEntity> cardEntities = Arrays.asList(cardEntity1, cardEntity2);
+        var card2 = Card.builder()
+                .id(2L)
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
+
+        var cardEntity1 = CardEntity.builder()
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
+
+        var cardEntity2 = CardEntity.builder()
+                .name("cardName2")
+                .description("cardDesc2")
+                .build();
+
+        var cardEntities = Arrays.asList(cardEntity1, cardEntity2);
 
         given(cardRepository.findAllByBoardEntityIdOrderByCreatedAtDesc(boardId)).willReturn(cardEntities);
         given(cardMapper.map(cardEntity1)).willReturn(card1);
         given(cardMapper.map(cardEntity2)).willReturn(card2);
 
         //when
-        List<Card> result = cardService.getCards(boardId);
+        var result = cardService.getCards(boardId);
 
         //then
+        var expectedCards = Arrays.asList(card1, card2);
         assertThat(result)
                 .containsExactlyElementsOf(expectedCards);
     }
 
     @Test
-    void should_returnEmptyCards_whenCardsDoNotExist() {
+    void should_returnEmptyCards_when_cardsDoNotExist() {
         //given
-        long boardId = 1L;
+        var boardId = 1L;
         List<CardEntity> cardEntities = List.of();
 
         given(cardRepository.findAllByBoardEntityIdOrderByCreatedAtDesc(boardId)).willReturn(cardEntities);
@@ -131,13 +172,29 @@ class CardServiceImplTest {
     }
 
     @Test
-    void should_addCard_whenBoardExist() {
+    void should_addCard_when_boardExists() {
         // given
-        long boardId = 1L;
-        BoardEntity boardEntity1 = new BoardEntity("name1", "desc1");
-        Card card1 = new Card(1L,"cardName1", "cardDesc1", null, null);
-        CardEntity cardEntity1 = new CardEntity("cardName1", "cardDesc1");
-        CardModification cardModification = new CardModification("newCardName", "newCardDesc");
+        var boardId = 1L;
+        var boardEntity1 = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
+
+        var cardEntity1 = CardEntity.builder()
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
+
+        var cardModification = CardModification.builder()
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
+
+        var card1 = Card.builder()
+                .id(1L)
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
 
         given(boardService.getBoardById(boardId)).willReturn(boardEntity1);
         given(cardMapper.map(cardModification)).willReturn(cardEntity1);
@@ -145,7 +202,7 @@ class CardServiceImplTest {
         given(cardMapper.map(cardEntity1)).willReturn(card1);
 
         //when
-        Card result = cardService.addCard(boardId, cardModification);
+        var result = cardService.addCard(boardId, cardModification);
 
         //then
         assertThat(result).isEqualTo(card1);
@@ -154,7 +211,7 @@ class CardServiceImplTest {
     @Test
     void should_deleteCard() {
         // given
-        long cardId = 1L;
+        var cardId = 1L;
 
         // when
         cardService.deleteCard(cardId);

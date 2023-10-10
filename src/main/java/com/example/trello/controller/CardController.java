@@ -4,6 +4,7 @@ import com.example.trello.model.dto.card.Card;
 import com.example.trello.model.dto.card.CardModification;
 import com.example.trello.service.CardService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/boards/{boardId}/cards")
 public class CardController {
 
     private final CardService cardService;
-
-    public CardController(final CardService cardService) {
-        this.cardService = cardService;
-    }
 
     @GetMapping
     public List<Card> getCardsByBoardId(@PathVariable final Long boardId) {

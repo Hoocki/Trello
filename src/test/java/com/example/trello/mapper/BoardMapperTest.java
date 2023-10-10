@@ -12,13 +12,20 @@ class BoardMapperTest {
     @Test
     void should_returnBoardEntity_when_givenBoardModification() {
         // given
-        final BoardModification boardModification = new BoardModification("name1", "desc1");
+        var boardModification = BoardModification.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
 
         //when
-        BoardEntity result = BOARD_MAPPER.map(boardModification);
+        var result = BOARD_MAPPER.map(boardModification);
 
         //then
-        BoardEntity expectedBoardEntity = new BoardEntity("name1", "desc1");
+        var expectedBoardEntity = BoardEntity.builder()
+                .name("name1")
+                .description("desc1")
+                .build();
+
         assertThat(result).isEqualTo(expectedBoardEntity);
     }
 
