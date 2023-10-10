@@ -15,6 +15,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "cards")
@@ -40,6 +41,14 @@ public class CardEntity {
     private BoardEntity boardEntity;
 
     public CardEntity() {
+    }
+
+    public CardEntity(final Long id, final String name, final String description, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public CardEntity(final String name, final String description, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
@@ -88,6 +97,19 @@ public class CardEntity {
 
     public void setBoardEntity(final BoardEntity boardEntity) {
         this.boardEntity = boardEntity;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CardEntity that = (CardEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt) && Objects.equals(boardEntity, that.boardEntity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, createdAt, updatedAt, boardEntity);
     }
 
 }
