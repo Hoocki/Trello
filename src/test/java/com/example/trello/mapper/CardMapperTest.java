@@ -11,39 +11,65 @@ class CardMapperTest {
     private final CardMapper CARD_MAPPER = new CardMapper();
 
     @Test
-    void should_returnCardEntity_whenGivenCardModification() {
+    void should_returnCardEntity_when_givenCardModification() {
         // given
-        final CardModification cardModification = new CardModification("newCardName", "newCardDesc");
+        var cardModification = CardModification.builder()
+                .name("newCardName")
+                .description("newCardDesc")
+                .build();
 
         // when
-        CardEntity result = CARD_MAPPER.map(cardModification);
+        var result = CARD_MAPPER.map(cardModification);
 
         // then
-        CardEntity expectedCardEntity = new CardEntity("newCardName", "newCardDesc");
+        var expectedCardEntity = CardEntity.builder()
+                .name("newCardName")
+                .description("newCardDesc")
+                .build();
+
         assertThat(result).isEqualTo(expectedCardEntity);
     }
 
     @Test
-    void should_returnCard_whenGivenCardEntity() {
+    void should_returnCard_when_givenCardEntity() {
         // given
-        final CardEntity cardEntity = new CardEntity(1L, "newCardName", "newCardDesc",null,null);
+        var cardEntity = CardEntity.builder()
+                .id(1L)
+                .name("newCardName")
+                .description("newCardDesc")
+                .build();
+
         // when
-        Card result = CARD_MAPPER.map(cardEntity);
+        var result = CARD_MAPPER.map(cardEntity);
 
         // then
-        Card expectedCard = new Card(1L, "newCardName", "newCardDesc",null,null);
+        var expectedCard = Card.builder()
+                .id(1L)
+                .name("newCardName")
+                .description("newCardDesc")
+                .build();
+
         assertThat(result).isEqualTo(expectedCard);
     }
 
     @Test
-    void should_returnCardEntity_whenGivenCard() {
+    void should_returnCardEntity_when_givenCard() {
         // given
-        final Card card = new Card(1L,"cardName1", "cardDesc1", null,null);
+        var card = Card.builder()
+                .id(1L)
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
+
         // when
-        CardEntity result = CARD_MAPPER.map(card);
+        var result = CARD_MAPPER.map(card);
 
         // then
-        CardEntity expectedCardEntity = new CardEntity("cardName1", "cardDesc1");
+        var expectedCardEntity = CardEntity.builder()
+                .name("cardName1")
+                .description("cardDesc1")
+                .build();
+
         assertThat(result).isEqualTo(expectedCardEntity);
     }
 

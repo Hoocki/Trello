@@ -9,24 +9,29 @@ import org.springframework.stereotype.Component;
 public class CardMapper {
 
     public CardEntity map(final CardModification cardModification) {
-        return new CardEntity(cardModification.getName(), cardModification.getDescription());
+       return CardEntity.builder()
+                .name(cardModification.name())
+                .description(cardModification.description())
+                .build();
     }
 
     public Card map(final CardEntity cardEntity) {
-        return new Card(
-                cardEntity.getId(),
-                cardEntity.getName(),
-                cardEntity.getDescription(),
-                cardEntity.getCreatedAt(),
-                cardEntity.getUpdatedAt());
+        return Card.builder()
+                .id(cardEntity.getId())
+                .name(cardEntity.getName())
+                .description(cardEntity.getDescription())
+                .createdAt(cardEntity.getCreatedAt())
+                .updatedAt(cardEntity.getUpdatedAt())
+                .build();
     }
 
     public CardEntity map(final Card card) {
-        return new CardEntity(
-                card.getName(),
-                card.getDescription(),
-                card.getCreatedAt(),
-                card.getUpdatedAt());
+        return CardEntity.builder()
+                .name(card.getName())
+                .description(card.getDescription())
+                .createdAt(card.getCreatedAt())
+                .updatedAt(card.getUpdatedAt())
+                .build();
     }
 
 }

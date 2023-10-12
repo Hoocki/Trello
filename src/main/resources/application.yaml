@@ -1,4 +1,6 @@
 spring:
+  flyway:
+    schemas: roma
   jpa:
     show-sql: true
     properties:
