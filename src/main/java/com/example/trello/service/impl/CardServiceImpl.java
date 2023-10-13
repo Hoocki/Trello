@@ -7,7 +7,7 @@ import com.example.trello.model.entity.card.CardEntity;
 import com.example.trello.repository.CardRepository;
 import com.example.trello.service.BoardService;
 import com.example.trello.service.CardService;
-import com.example.trello.service.exception.CardException;
+import com.example.trello.service.exception.CardNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -35,7 +35,7 @@ public class CardServiceImpl implements CardService {
     }
 
     private CardEntity getCardEntityById(final Long cardId) {
-        return cardRepository.findById(cardId).orElseThrow(CardException::new);
+        return cardRepository.findById(cardId).orElseThrow(CardNotFoundException::new);
     }
 
     public List<Card> getCards(final Long boardId) {

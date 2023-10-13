@@ -7,7 +7,7 @@ import com.example.trello.model.entity.board.BoardEntity;
 import com.example.trello.model.entity.card.CardEntity;
 import com.example.trello.repository.CardRepository;
 import com.example.trello.service.BoardService;
-import com.example.trello.service.exception.CardException;
+import com.example.trello.service.exception.CardNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -74,7 +74,7 @@ class CardServiceImplTest {
 
         //then
         assertThat(throwable)
-                .isInstanceOf(CardException.class)
+                .isInstanceOf(CardNotFoundException.class)
                 .hasMessageContaining("Card doesn't exist");
     }
 

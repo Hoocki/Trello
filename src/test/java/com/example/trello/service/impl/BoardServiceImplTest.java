@@ -4,7 +4,7 @@ import com.example.trello.mapper.BoardMapper;
 import com.example.trello.model.dto.board.BoardModification;
 import com.example.trello.model.entity.board.BoardEntity;
 import com.example.trello.repository.BoardRepository;
-import com.example.trello.service.exception.BoardException;
+import com.example.trello.service.exception.BoardNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -100,7 +100,7 @@ class BoardServiceImplTest {
 
         // then
         assertThat(thrown)
-                .isInstanceOf(BoardException.class)
+                .isInstanceOf(BoardNotFoundException.class)
                 .hasMessageContaining("Board doesn't exist");
 
     }
