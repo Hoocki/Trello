@@ -1,6 +1,6 @@
 package com.example.trello.service.impl;
 
-import com.example.trello.service.exception.BoardException;
+import com.example.trello.service.exception.BoardNotFoundException;
 import com.example.trello.mapper.BoardMapper;
 import com.example.trello.model.dto.board.BoardModification;
 import com.example.trello.model.entity.board.BoardEntity;
@@ -23,7 +23,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public BoardEntity getBoardById(final Long boardId) {
-        return boardRepository.findById(boardId).orElseThrow(BoardException::new);
+        return boardRepository.findById(boardId).orElseThrow(BoardNotFoundException::new);
     }
 
     public BoardEntity addBoard(final BoardModification boardModification) {

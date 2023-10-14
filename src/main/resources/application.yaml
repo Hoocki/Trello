@@ -9,7 +9,7 @@ spring:
         format_sql: true
         default_schema: roma
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 server:
   error:
     include-message: always

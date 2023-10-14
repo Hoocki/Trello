@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.Arrays;
+import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -38,7 +38,7 @@ class CardControllerTest {
                 .description("cardDesc2")
                 .build();
 
-        var expectedCards = Arrays.asList(card1, card2);
+        var expectedCards = List.of(card1, card2);
 
         given(cardService.getCards(boardId)).willReturn(expectedCards);
 

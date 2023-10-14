@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.Arrays;
+import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -35,7 +35,7 @@ class BoardControllerTest {
                 .description("desc2")
                 .build();
 
-        var expectedBoards = Arrays.asList(boardEntity1, boardEntity2);
+        var expectedBoards = List.of(boardEntity1, boardEntity2);
 
         given(boardService.getBoards()).willReturn(expectedBoards);
 
