@@ -1,0 +1,10 @@
+.paper {
+    overflow: auto;
+    min-height: 620px;
+    max-height: 620px;
+    margin-top: 20px;
+}
+
+.typography {
+    text-align: center;
+}
