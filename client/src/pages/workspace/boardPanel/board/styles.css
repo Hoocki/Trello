@@ -1,0 +1,9 @@
+.board {
+    width: 100%;
+    height: 100%;
+    background-color: #e3f2fd;
+}
+
+.buttonDelete {
+    text-align: right;
+}

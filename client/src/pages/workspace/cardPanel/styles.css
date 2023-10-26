@@ -1,0 +1,17 @@
+.cardPanelContainer {
+    border: 1px solid #d9defb;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #bbdefb;
+}
+
+.typography {
+    text-align: center;
+    color: #1976d2;
+}
+
+.listCards {
+    overflow: auto;
+    max-height: 620px;
+    min-height: 620px;
+}

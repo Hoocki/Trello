@@ -1,9 +1,10 @@
 export interface ICard {
-    id: bigint
+    id: number
     name: string
     description: string
     createdAt: Date
     updatedAt: Date
+    boardId: number
 }
 
 export interface ICardModification {
