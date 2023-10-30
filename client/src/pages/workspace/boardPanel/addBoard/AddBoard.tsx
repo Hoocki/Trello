@@ -1,17 +1,29 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {IBoardModification} from "../../../../models/Board";
 import {AddBoardProp} from "./props";
 import Button from "@mui/material/Button";
 import {Card, CardContent, TextField, Typography} from "@mui/material";
 import "./styles.css";
 
-const AddBoard: React.FC<AddBoardProp> = ({onCreate}: AddBoardProp) => {
-
+const AddBoard: React.FC<AddBoardProp> = ({addBoard}: AddBoardProp) => {
     const [board, setBoard] = useState<IBoardModification>({name: '', description: ''})
+    const [isValid, setIsValid] = useState<boolean>(false)
+
+    useEffect(() => {
+        validateBoard(board);
+    }, [board]);
 
     const addNewBoard = () => {
-        onCreate(board);
+        addBoard(board);
         clearBoard();
+    }
+
+    const validateBoard = (board: IBoardModification) => {
+        if (board.name !== "" && board.description !== "") {
+            setIsValid(true)
+        } else {
+            setIsValid(false)
+        }
     }
 
     const clearBoard = () => {
@@ -19,9 +31,9 @@ const AddBoard: React.FC<AddBoardProp> = ({onCreate}: AddBoardProp) => {
     }
 
     return (
-        <Card variant="outlined">
+        <Card variant="outlined" className="addBoard">
             <CardContent>
-                <Typography className={'typography'} variant="h4">New Board</Typography>
+                <Typography className="typography" variant="h4">New Board</Typography>
                 <TextField
                     variant="outlined"
                     label="Name of board"
@@ -40,7 +52,7 @@ const AddBoard: React.FC<AddBoardProp> = ({onCreate}: AddBoardProp) => {
                     fullWidth
                     margin="normal"
                 />
-                <Button variant="contained" color="success" onClick={addNewBoard} fullWidth>
+                <Button variant="contained" color="success" onClick={addNewBoard} disabled={!isValid} fullWidth>
                     Add new board
                 </Button>
             </CardContent>
