@@ -5,28 +5,37 @@ import CardComponent from "./card/CardComponent";
 import {CardPanelProps} from "./props";
 import {ICard, ICardModification} from "../../../models/Card";
 import "./styles.css";
-import {addCardService, deleteCardService, getCardsByBoardIdService} from "../../../services/card";
+import {addCardService, deleteCardService, getCardsByBoardIdService, updateCardService} from "../../../services/card";
 
 const CardPanel: React.FC<CardPanelProps> = ({selectedBoardId}: CardPanelProps) => {
     const [cards, setCards] = useState<ICard[]>([]);
 
     useEffect(() => {
-        getCards(selectedBoardId);
+        getCards().then();
     }, [selectedBoardId])
 
-    const getCards = (boardId: number) => {
-        const fetchedCards = getCardsByBoardIdService(boardId);
-        setCards(fetchedCards.filter(card => card.boardId === boardId));
+    const getCards = async () => {
+        const fetchedCards = await getCardsByBoardIdService(selectedBoardId);
+        setCards(fetchedCards);
     }
 
-    const addCard = (boardId: number, newCard: ICardModification) => {
-        const addedCard = addCardService(boardId, newCard);
-        setCards([...cards, addedCard].filter(card => card.boardId === boardId))
+    const addCard = async (newCard: ICardModification) => {
+        const addedCard = await addCardService(selectedBoardId, newCard);
+        if (addedCard !== null) {
+            setCards([...cards, addedCard]);
+        }
     }
 
-    const deleteCard = (cardId: number) => {
-        deleteCardService(cardId);
-        setCards(cards.filter(card => card.id !== cardId))
+    const updateCard = async (id: number, updateCard: ICardModification) => {
+        const updatedBoard = await updateCardService(selectedBoardId, id, updateCard);
+        if (updatedBoard !== null) {
+            await getCards();
+        }
+    }
+
+    const deleteCard = async (cardId: number) => {
+        await deleteCardService(selectedBoardId, cardId);
+        await getCards();
     }
 
     return (
@@ -41,7 +50,7 @@ const CardPanel: React.FC<CardPanelProps> = ({selectedBoardId}: CardPanelProps) 
                         {cards.map((card) => (
                             <Grid key={card.id} item xs={4}>
                                 <ListItem>
-                                    <CardComponent card={card} deleteCard={deleteCard}/>
+                                    <CardComponent card={card} deleteCard={deleteCard} updateCard={updateCard}/>
                                 </ListItem>
                             </Grid>
                         ))}

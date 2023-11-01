@@ -1,7 +1,7 @@
 .boardPanelContainer {
-    border: 1px solid #d9defb;
-    border-radius: 8px;
-    padding: 10px;
+    border: 0.1vh solid #d9defb;
+    border-radius: 1%;
+    padding: 1vh;
     background-color: #bbdefb;
 }
 
@@ -12,6 +12,6 @@
 
 .listBoards {
     overflow: auto;
-    max-height: 620px;
-    min-height: 620px;
+    max-height: 66vh;
+    min-height: 66vh;
 }

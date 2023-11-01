@@ -5,28 +5,37 @@ import Board from "./board/Board"
 import {IBoard, IBoardModification} from "../../../models/Board";
 import {BoardPanelProps} from "./props";
 import "./styles.css";
-import {addBoardService, deleteBoardService, getBoardsService} from "../../../services/board";
+import {addBoardService, deleteBoardService, getBoardsService, updateBoardService} from "../../../services/board";
 
 const BoardPanel: React.FC<BoardPanelProps> = ({selectedBoardId, updateSelectedBoardId}: BoardPanelProps) => {
     const [boards, setBoards] = useState<IBoard[]>([]);
 
     useEffect(() => {
-        getBoards();
+        getBoards().then();
     }, [])
 
-    const getBoards = () => {
-        const fetchedBoards = getBoardsService();
+    const getBoards = async () => {
+        const fetchedBoards = await getBoardsService();
         setBoards(fetchedBoards);
     }
 
-    const addBoard = (newBoard: IBoardModification) => {
-        const addedBoard = addBoardService(newBoard);
-        setBoards([...boards, addedBoard])
+    const addBoard = async (newBoard: IBoardModification) => {
+        const addedBoard = await addBoardService(newBoard);
+        if (addedBoard !== null) {
+            setBoards([...boards, addedBoard]);
+        }
     }
 
-    const deleteBoard = (id: number) => {
-        deleteBoardService(id);
-        setBoards(boards.filter(board => board.id !== id));
+    const updateBoard = async (id: number, updateBoard: IBoardModification) => {
+        const updatedBoard = await updateBoardService(id, updateBoard);
+        if (updatedBoard !== null) {
+            await getBoards();
+        }
+    }
+
+    const deleteBoard = async (id: number) => {
+        await deleteBoardService(id);
+        await getBoards();
         resetSelectedBoardId(id);
     }
 
@@ -46,9 +55,7 @@ const BoardPanel: React.FC<BoardPanelProps> = ({selectedBoardId, updateSelectedB
                 <List>
                     {boards.map((board) => (
                         <ListItem key={board.id}>
-                            <Board board={board} deleteBoard={deleteBoard} updateSelectedBoardId={() => {
-                                updateSelectedBoardId(board.id)
-                            }}/>
+                            <Board board={board} deleteBoard={deleteBoard} updateBoard={updateBoard} updateSelectedBoardId={updateSelectedBoardId}/>
                         </ListItem>
                     ))}
                 </List>
