@@ -1,17 +1,24 @@
 import {IBoard, IBoardModification} from "../models/Board";
+import _ from "lodash";
+import httpClient from "./httpClient";
 
-export const getBoardsService = (): IBoard[] => {
-    return [
-        {id: 1, name: 'board1', description: 'boardDesc1', createdAt: new Date(), updatedAt: new Date()},
-        {id: 2, name: 'board2', description: 'boardDesc2', createdAt: new Date(), updatedAt: new Date()}
-    ];
-};
+const URL = "boards";
 
-export const addBoardService = (newBoard: IBoardModification): IBoard => {
-    return {id: Date.now(), name: newBoard.name, description: newBoard.description, createdAt: new Date(), updatedAt: new Date()};
+export const getBoardsService = async ():Promise<IBoard[]> => {
+    const response = await httpClient.get<IBoard[]>(URL);
+    return _.get(response, "data", []);
 }
 
-export const deleteBoardService = (id: number): void => {
+export const addBoardService = async (newBoard: IBoardModification): Promise<IBoard | null> => {
+    const response = await httpClient.post<IBoard>(URL, newBoard);
+    return _.get(response, "data", null);
+}
 
-};
+export const updateBoardService = async (id: number, updateBoard: IBoardModification): Promise<IBoard | null> => {
+    const response = await httpClient.put<IBoard>(`${URL}/${id}`, updateBoard);
+    return _.get(response, "data", null);
+}
 
+export const deleteBoardService = async (id: number): Promise<void> => {
+    await httpClient.delete(`${URL}/${id}`);
+}
